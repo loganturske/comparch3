@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <signal.h>
 
+int counter = 0;
 /** 
  *  Define the method to be called when CTRL-C is pressed.
  */
@@ -20,7 +21,7 @@ void programInterrupted(int i)
 
 void processAlarm(int i) 
 {
-    printf("In the signal interrupt routine\n");
+    counter += 15;
 }
 /**
  *   Main method, shows how to map another function over the CTRL-C
@@ -32,15 +33,17 @@ int main()
      *  In this case the SIGNT interrupt is set to call the 
      *  programInterrupted function defined above.
      */
-    sigset(SIGINT, programInterrupted);
-    sigset(SIGALARM, processAlarm);
+    sigset(SIGALRM, processAlarm);
+    ualarm(1, 15);
     /*  Now just go into a loop for a few seconds to show what happens when
      *  CTRL-C is pressed.  Press Control C while this is running and you
      *  will see that the interrpts are turned off and are going to the 
      *  interrup method and printing out an error.
      */
     for (i = 30; i < 45; i++) {
+        counter = 0;
         printf("fib(%d) = %d\n", i, fib(i));
+        printf("Time: %d\n", counter);
     }
 }
 
@@ -49,21 +52,4 @@ int fib(int n)
     if (n <= 1)
 	return 1;
     return (fib(n-1) + fib(n-2));
-}
-
-public class Fibonacci
-{
-    private static int counter = 0;
- 
-    public static void main(String argv[]) {
-       for (int i = 3; i < 45; i++) {
-           System.out.println("Num = " + i + "  Fib = " +
-             fibonacci(i) + "  time = " + counter);
-        }
-    }
- 
-    public static int fibonacci(int NI) {
-        if (NI <= 1) return 1;
-        return fibonacci(NI - 1) + fibonacci(NI - 2);
-    }
 }

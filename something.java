@@ -2,8 +2,12 @@ public class PolyFunctionPtrs {
 
     public static void main(String args[]) {
 
-        PolyFunction pf1 = new PolyFunction_1();
-        PolyFunction pf2 = new PolyFunction_2();
+        PolyFunction[] arr = new PolyFunction[]{
+            PolyFunction pf1 = new PolyFunction_1(),
+            PolyFunction pf2 = new PolyFunction_2()
+
+        }
+
         if (args.length == 0) {
             System.out.println("Must be called with a 0 or 1");
             System.exit(1);
